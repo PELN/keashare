@@ -35,7 +35,9 @@
         <button class="form-control">Submit</button>
     </form>
 
-    {% comment %} {% if error %} <p class="error"> {{ error }} </p> {% endif %} {% endcomment %}
+    {% if error %} 
+        <p class="error"> {{ error }} </p> 
+    {% endif %}
 
 </body>
 </html>

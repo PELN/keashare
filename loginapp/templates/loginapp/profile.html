@@ -9,13 +9,14 @@
 <body>
     
     <h1>Profile</h1>
-    <h2>{{ user.get_full_name }}</h2>
     <ul>
         <li>Username: {{ user.username }}</li>
         <li>Bio: {{ user.profile.bio }}</li>
         <li>Study: {{ user.profile.study }}</li>
         <li>City: {{ user.profile.city }}</li>
     </ul>
+
+    <a href="{% url 'loginapp:edit_profile' %}">Edit profile</a>
 
 
 </body>

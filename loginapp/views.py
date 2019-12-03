@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from .utils import random_string
+from .models import *
 
 def login(request):
     context = {}
@@ -13,6 +14,7 @@ def login(request):
             password=request.POST['password'])
         if user:
             dj_login(request, user)
+            # return HttpResponseRedirect(reverse ('keashareapp:index'))
             return HttpResponseRedirect(reverse ('keashareapp:index'))
         else:
             context['error'] = "Username or password is wrong."
@@ -43,7 +45,8 @@ def register(request):
         user = User.objects.create_user(request.POST['user'],password=request.POST['password'])
         user.save()
         dj_login(request, user)
-        return HttpResponseRedirect(reverse ('keashareapp:index'))
+        # return HttpResponseRedirect(reverse ('keashareapp:index'))
+        return HttpResponseRedirect(reverse ('loginapp:profile'))
     
     return render(request, 'loginapp/register.html')
 
@@ -64,5 +67,31 @@ def reset_password(request):
 
     return render(request, 'loginapp/reset_password.html', context)
 
-# def profile(request):
-#     return render(request, 'keashareapp/profile.html')
+
+def profile(request):
+    return render(request, 'loginapp/profile.html')
+
+# udfyld formular med eksisterende info , fyld context op
+def edit_profile(request):
+    if request.method == 'GET':
+        profile_info = Profile.objects.filter(user=request.user)
+      
+        context = {
+            'profile': profile_info
+        }
+        return render(request, 'loginapp/edit_profile.html', context)
+
+    if request.method == 'POST':
+        # profile_info = Profile() # makes a new profile object for every post (only use for items)
+        profile_info = Profile.objects.get(user=request.user) # get the user in db
+
+        # print("request.user")
+        profile_info.bio = request.POST.get('bio')
+        profile_info.city = request.POST.get('city')
+        profile_info.study = request.POST.get('study')
+        profile_info.user = request.user
+        profile_info.save()
+        return HttpResponseRedirect(reverse ('loginapp:profile'))
+    
+    return HttpResponseBadRequest()
+
