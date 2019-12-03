@@ -64,3 +64,5 @@ def reset_password(request):
 
     return render(request, 'loginapp/reset_password.html', context)
 
+# def profile(request):
+#     return render(request, 'keashareapp/profile.html')

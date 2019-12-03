@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('login/', include('loginapp.urls', namespace='loginapp')),
+    path('accounts/', include('loginapp.urls', namespace='loginapp')),
     path('keashare/', include('keashareapp.urls', namespace='keashareapp')),
     path('admin/', admin.site.urls),
 ]
