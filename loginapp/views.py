@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from .utils import random_string
 from .models import *
+from django.contrib.auth.decorators import login_required
+
 
 def login(request):
     context = {}
@@ -67,11 +69,11 @@ def reset_password(request):
 
     return render(request, 'loginapp/reset_password.html', context)
 
-
+@login_required
 def profile(request):
     return render(request, 'loginapp/profile.html')
 
-# udfyld formular med eksisterende info , fyld context op
+@login_required
 def edit_profile(request):
     if request.method == 'GET':
         profile_info = Profile.objects.filter(user=request.user)
