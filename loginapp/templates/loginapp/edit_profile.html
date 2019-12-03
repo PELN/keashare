@@ -1,39 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends 'base.html' %}
+
+{% block head %} 
     <title>Edit profile</title>
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-    body{
-       padding: 2%;
-    }
+{% endblock %}
 
-    .form-control{
-        width: 400px;
-    }
-    button{
-        background-color: #007bff!important;
-        color: white!important;
-    }
-    </style>
-</head>
-<body>
-    <h1>Edit profile</h1>
+{% block nav %}
+    <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
 
-    <form action="{% url 'loginapp:edit_profile' %}" method="POST">
-        {% csrf_token %}
-        <label for="bio">Bio</label>
-        <input type="text" name="bio" id="bio" placehoder="bio" class="form-control">
-        <label for="city">city</label>
-        <input type="text" name="city" id="city" placehoder="city" class="form-control">
-        <label for="study">study</label>
-        <input type="text" name="study" id="study" placehoder="study" class="form-control">
-        <input type="submit" value="Submit" class="form-control">
-    </form>
-
-
-</body>
-</html>
+{% block body %}
+<div class="container">
+    <div class="jumbotron">
+        <h1>Edit profile</h1>
+        <h2>User: {{ user }}</h2>
+        <form action="{% url 'loginapp:edit_profile' %}" method="POST">
+            {% csrf_token %}
+            <label for="bio">Bio</label>
+            <input type="text" name="bio" id="bio" placehoder="{{ user.profile.bio }}" value="{{ user.profile.bio }}" class="form-control">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" placehoder="{{ user.profile.city }}" value="{{ user.profile.city }}" class="form-control">
+            <label for="study">Study</label>
+            <input type="text" name="study" id="study" placehoder="{{ user.profile.study }}" value="{{ user.profile.study }}" class="form-control">
+            <input type="submit" value="Submit" class="form-control">
+        </form>
+{% endblock %}

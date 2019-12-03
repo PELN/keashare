@@ -1,18 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends 'base.html' %}
+
+{% block head %}
     <title>Keashare</title>
-</head>
-<body>
-    <h1>Keashare</h1>
-    <h2>Welcome: {{ user.username }}</h2>
-    <a href="{% url 'loginapp:logout' %}">LOGOUT</a>
+{% endblock %}
 
+{% block nav %}
+    <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
 
+{% block body %}
 
+<div class="container">
+    <div class="jumbotron">
+        <h1>Keashare</h1>
+        <h2>Welcome: {{ user.username }}</h2>
+    </div>
+</div>
 
-</body>
-</html>
+{% endblock %}
+
