@@ -22,12 +22,34 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="container">
     <div class="jumbotron">
         <h1>Groups</h1>
+        <hr>
+        <h2>Create new group</h2>
+        <form action="{% url 'keashareapp:groups' %}" method="POST">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="name">
+            <label for="description">Description</label>
+            <input id="description" name="description" type="textarea" placeholder="description">
+            <input type="submit" value="Create group">
+        </form>
+        <hr>
+        <h2>My groups</h2>
+        <hr>
+        {% for group in user_groups %}
+            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - <a href="{% url 'keashareapp:leave_group' pk=group.pk %}">Leave Group</a></p>
+            <hr>
+        {% endfor %}
+        
+        <h2>Discover groups</h2>
+        <hr>
+        {% for group in not_user_groups %}
+            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - <a href="{% url 'keashareapp:join_group' pk=group.pk %}">Join Group</a></p>
+            <hr>
+        {% endfor %}
     </div>
 </div>
-
 {% endblock %}
 
