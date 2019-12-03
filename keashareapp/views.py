@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -43,17 +43,41 @@ def groups(request):
 def posts(request):
     pass
 
-@login_required
-def groupdetails(request):
-    pass
 
 @login_required
-def join_group(request):
-    pass
+def groupdetails(request, pk):
+    user = User.objects.filter(pk=1)[0]
+
+    if request.method == 'GET':
+        # get the group that is clicked on (pk)        
+        user_groups = models.AppGroup.objects.filter(pk=pk)
+        # filter posts based on the group pk
+        posts = models.Post.objects.filter(group__in=user_groups).order_by('-created')
+
+        context = {
+            'user': user,
+            'posts': posts,
+            'user_groups': user_groups,
+        }
+        return render(request, 'keashareapp/groupdetails.html', context)
+    return HttpResponseBadRequest()
 
 
 @login_required
-def leave_group(request):
-    pass
+def join_group(request, pk):
+    user = User.objects.filter(pk=1)[0]
+    group = models.AppGroup.objects.get(pk=pk)
+    group.users.add(user)
+    group.save()
+    return HttpResponseRedirect(reverse('keashareapp:groups'))
+
+
+@login_required
+def leave_group(request, pk):
+    user = User.objects.filter(pk=1)[0]
+    group = models.AppGroup.objects.get(pk=pk)
+    group.users.remove(user)
+    group.save()
+    return HttpResponseRedirect(reverse('keashareapp:groups'))
 
 

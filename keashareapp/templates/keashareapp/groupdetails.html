@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Group details</title>
+{% endblock %}
+
+{% block nav %}
+    <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="jumbotron">
+        {% for group in user_groups %}
+            <h1>{{ group.name }}</h1>
+            <p>Group description: {{ group.description }}</p>
+        {% endfor %}
+        <hr>
+
+        <h2>Post in group</h2>
+        <form action="{% url 'keashareapp:index' %}" method="POST">
+            {% csrf_token  %}
+            <p><label for="group">Group</label></p>
+            <p><input type="text" name="group" id="group" placeholder="{{ user_groups.name }}" value="{{ user_groups.name }}"></p>
+            <p><label for="text">Text</label></p>
+            <p><input type="textarea" name="text" id="text"></p>
+            <p><input type="submit" value="OK"></p>
+        </form>
+     
+        <!-- POSTS THAT BELONGS TO GROUP -->
+        <div>{% for post in posts %}
+            Created: {{ post.created }}
+            Last updated: {{ post.last_updated }}
+            By: {{ post.user }}
+            <div>{{ post.text }}</div>
+            <hr>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
