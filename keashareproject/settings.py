@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'keashareproject.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'keashareproject.urls'
@@ -120,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/accounts/'
+
+LOGIN_EXEMPT_URLS = (
+    r'^accounts/$',
+    r'^accounts/register/$',
+)

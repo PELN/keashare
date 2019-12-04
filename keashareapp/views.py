@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . import models
 
-@login_required
 def index(request):
     user = request.user
     if request.method == 'GET':
@@ -19,7 +18,6 @@ def index(request):
 
         return render(request, 'keashareapp/index.html', context=context)
 
-@login_required
 def groups(request):
     # user = User.objects.filter(pk=1)[0]
     user = request.user
@@ -50,7 +48,6 @@ def groups(request):
     return HttpResponseBadRequest() # if it is neither post or get
 
 
-@login_required
 def groupdetails(request, pk):
     # user = User.objects.filter(pk=1)[0]
     user = request.user
@@ -81,13 +78,11 @@ def groupdetails(request, pk):
 
     return HttpResponseBadRequest()
 
-@login_required
 def post_submit(request):
     # redirect to previous page
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     # return render(request, 'keashareapp/post_submit.html')
 
-@login_required
 def join_group(request, pk):
     user = request.user
     group = models.AppGroup.objects.get(pk=pk)
@@ -96,7 +91,6 @@ def join_group(request, pk):
     return HttpResponseRedirect(reverse('keashareapp:groups'))
 
 
-@login_required
 def leave_group(request, pk):
     user = request.user
     group = models.AppGroup.objects.get(pk=pk)

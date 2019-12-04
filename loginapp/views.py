@@ -69,11 +69,10 @@ def reset_password(request):
 
     return render(request, 'loginapp/reset_password.html', context)
 
-@login_required
+
 def profile(request):
     return render(request, 'loginapp/profile.html')
 
-@login_required
 def edit_profile(request):
     if request.method == 'GET':
         profile_info = Profile.objects.filter(user=request.user)
