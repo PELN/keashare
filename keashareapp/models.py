@@ -10,7 +10,7 @@ class AppGroup(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.name
+        return f"{self.pk}, {self.name}"
 
 class Post(models.Model):
     # Meta
@@ -22,4 +22,4 @@ class Post(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return self.text[:20] # show 20 characters
+        return f"{self.pk}, {self.user}, {self.group}, {self.text[:20]}" # show 20 characters

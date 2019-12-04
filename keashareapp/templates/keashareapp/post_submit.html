@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Group details</title>
+{% endblock %}
+
+{% block nav %}
+    <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="jumbotron">
+        <h1>Post was submitted</h1>
+        <a href="{{ request.META.HTTP_REFERER }}">Go back</a>
+    </div>
+</div>
+{% endblock %}

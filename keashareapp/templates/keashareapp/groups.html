@@ -39,14 +39,14 @@
         <h2>My groups</h2>
         <hr>
         {% for group in user_groups %}
-            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - <a href="{% url 'keashareapp:leave_group' pk=group.pk %}">Leave Group</a></p>
+            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - {{ group.description }} - <a href="{% url 'keashareapp:leave_group' pk=group.pk %}">Leave Group</a></p>
             <hr>
         {% endfor %}
         
         <h2>Discover groups</h2>
         <hr>
         {% for group in not_user_groups %}
-            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - <a href="{% url 'keashareapp:join_group' pk=group.pk %}">Join Group</a></p>
+            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - {{ group.description }} - <a href="{% url 'keashareapp:join_group' pk=group.pk %}">Join Group</a></p>
             <hr>
         {% endfor %}
     </div>

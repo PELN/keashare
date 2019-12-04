@@ -11,7 +11,6 @@ def index(request):
 @login_required
 def groups(request):
     user = User.objects.filter(pk=1)[0]
-
     # get list of groups user is/is not member
     if request.method == 'GET':
         user_groups = models.AppGroup.objects.filter(users__username__contains=user.username)
@@ -22,7 +21,6 @@ def groups(request):
             'user_groups': user_groups,
             'not_user_groups': not_user_groups,
         }
-
         return render(request, 'keashareapp/groups.html', context=context)
 
     # create group
@@ -40,17 +38,13 @@ def groups(request):
 
 
 @login_required
-def posts(request):
-    pass
-
-
-@login_required
 def groupdetails(request, pk):
     user = User.objects.filter(pk=1)[0]
-
     if request.method == 'GET':
         # get the group that is clicked on (pk)        
         user_groups = models.AppGroup.objects.filter(pk=pk)
+        group_pk = models.AppGroup.objects.get(pk=pk)
+
         # filter posts based on the group pk
         posts = models.Post.objects.filter(group__in=user_groups).order_by('-created')
 
@@ -58,10 +52,25 @@ def groupdetails(request, pk):
             'user': user,
             'posts': posts,
             'user_groups': user_groups,
+            'group_pk': group_pk,
         }
-        return render(request, 'keashareapp/groupdetails.html', context)
+        return render(request, 'keashareapp/groupdetails.html', context=context)
+    
+    if request.method == 'POST':
+        post = models.Post()
+        post.text = request.POST['text']
+        post.group = models.AppGroup.objects.get(pk=request.POST['group'])
+        post.user = user
+        post.save()
+        return HttpResponseRedirect(reverse('keashareapp:post_submit'))
+
     return HttpResponseBadRequest()
 
+@login_required
+def post_submit(request):
+    # redirect to previous page
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # return render(request, 'keashareapp/post_submit.html')
 
 @login_required
 def join_group(request, pk):
