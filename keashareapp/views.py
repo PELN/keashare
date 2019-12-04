@@ -6,11 +6,24 @@ from . import models
 
 @login_required
 def index(request):
-    return render(request, 'keashareapp/index.html')
+    user = request.user
+    if request.method == 'GET':
+        user_groups = models.AppGroup.objects.filter(users__username__contains=user.username)
+        posts = models.Post.objects.filter(group__in=user_groups).order_by('-created')[:10] # show correct posts, order-by, limit
+
+        context = {
+            'user': user,
+            'posts': posts,
+            'user_groups': user_groups,
+        }
+
+        return render(request, 'keashareapp/index.html', context=context)
 
 @login_required
 def groups(request):
-    user = User.objects.filter(pk=1)[0]
+    # user = User.objects.filter(pk=1)[0]
+    user = request.user
+
     # get list of groups user is/is not member
     if request.method == 'GET':
         user_groups = models.AppGroup.objects.filter(users__username__contains=user.username)
@@ -39,7 +52,9 @@ def groups(request):
 
 @login_required
 def groupdetails(request, pk):
-    user = User.objects.filter(pk=1)[0]
+    # user = User.objects.filter(pk=1)[0]
+    user = request.user
+
     if request.method == 'GET':
         # get the group that is clicked on (pk)        
         user_groups = models.AppGroup.objects.filter(pk=pk)
@@ -74,7 +89,7 @@ def post_submit(request):
 
 @login_required
 def join_group(request, pk):
-    user = User.objects.filter(pk=1)[0]
+    user = request.user
     group = models.AppGroup.objects.get(pk=pk)
     group.users.add(user)
     group.save()
@@ -83,7 +98,7 @@ def join_group(request, pk):
 
 @login_required
 def leave_group(request, pk):
-    user = User.objects.filter(pk=1)[0]
+    user = request.user
     group = models.AppGroup.objects.get(pk=pk)
     group.users.remove(user)
     group.save()

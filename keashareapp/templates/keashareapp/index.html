@@ -22,13 +22,25 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="container">
     <div class="jumbotron">
         <h1>Keashare</h1>
         <h2>Welcome: {{ user.username }}</h2>
+        <hr>
+        <h4>Recent posts from groups you are member of</h4>
+        <hr>
+        <div>
+            {% for post in posts %}
+                Group: {{ post.group.name }}
+                Created: {{ post.created }}
+                Last updated: {{ post.last_updated }}
+                By: {{ post.user }}
+                <div>{{ post.text }}</div>
+                <hr>
+            {% endfor %}
+        </div>
+
     </div>
 </div>
-
 {% endblock %}
 

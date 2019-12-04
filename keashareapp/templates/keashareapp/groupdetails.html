@@ -46,7 +46,8 @@
         <hr>
 
         <!-- POSTS THAT BELONGS TO GROUP -->
-        <div>{% for post in posts %}
+        <div>
+        {% for post in posts %}
             Created: {{ post.created }}
             Last updated: {{ post.last_updated }}
             By: {{ post.user }}
