@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from .utils import random_string
 from .models import *
 from django.contrib.auth.decorators import login_required
-
+# from .tasks import add
 
 def login(request):
     context = {}
@@ -68,6 +68,12 @@ def reset_password(request):
             context['error'] = "No such username"
 
     return render(request, 'loginapp/reset_password.html', context)
+
+
+def sendemail(request):
+    # add.delay(2,2)
+    # return HttpResponse('<h1>Task is done!!!</h1>')
+    return render(request, 'loginapp/sendemail.html')
 
 
 def profile(request):
