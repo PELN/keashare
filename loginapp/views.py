@@ -62,10 +62,14 @@ def reset_password(request):
         users = User.objects.filter(username=request.POST['user']) # use filter to check list of users contain username
         if users: # if user exists, generate random string for new password, show in console
             user = users[0]
+            email = request.POST['email']
             new_password = random_string()
             user.set_password(new_password)
             user.save()
             print(f'*********** User {user} change password to {new_password}')
+
+            send.delay(email, "Reset password", new_password)
+
             return HttpResponseRedirect(reverse('loginapp:login'))
         else:
             context['error'] = "No such username"
@@ -76,8 +80,9 @@ def reset_password(request):
 def send_email(request):
     # sleepy.delay(10)
     # add.delay(2,2)
-    send.delay("peryagtest@gmail.com", "subject whatsup", "testing body")
+    send.delay("joachimes@gmail.com", "Reset password", "testing body")
     return HttpResponse('<h1>Email has been sent!</h1>')
+
 
 
 def profile(request):
