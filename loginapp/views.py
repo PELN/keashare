@@ -73,7 +73,7 @@ def reset_password(request):
 
 
 def send_email(request):
-    sleepy(10)
+    sleepy.delay(10)
     # return HttpResponse('Done!')
     return HttpResponse('<h1>Task is done!</h1>')
 
