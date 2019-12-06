@@ -1,4 +1,6 @@
 from celery import Celery
+from celery import shared_task
+from time import sleep
 # import yagmail
 
 # app = Celery()
@@ -10,12 +12,14 @@ app = Celery(
         broker='redis://localhost',
 )
 
-# app.autodiscover_tasks()
+# @app.task
+# def add(x, y):
+#     return x + y
 
-@app.task
-def add(x, y):
-    return x + y
-
+@shared_task
+def sleepy(duration):
+    sleep(duration)
+    return None
 
 # @app.task
 # def sendEmail(email):

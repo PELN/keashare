@@ -132,4 +132,3 @@ LOGIN_EXEMPT_URLS = (
     r'^accounts/register/$',
 )
 
-

@@ -7,7 +7,7 @@ from .utils import random_string
 from .models import *
 from django.contrib.auth.decorators import login_required
 
-from .tasks import add
+from .tasks import sleepy
 # from .tasks import sendEmail
 
 def login(request):
@@ -72,11 +72,10 @@ def reset_password(request):
     return render(request, 'loginapp/reset_password.html', context)
 
 
-def sendemail(request):
-    add.delay(5, 5)
-    # sendEmail.delay()
-    return HttpResponse('<h1>Task is done!!!</h1>')
-    # return render(request, 'loginapp/sendemail.html')
+def send_email(request):
+    sleepy(10)
+    # return HttpResponse('Done!')
+    return HttpResponse('<h1>Task is done!</h1>')
 
 
 def profile(request):
