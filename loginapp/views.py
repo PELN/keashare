@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from .utils import random_string
 from .models import *
 from django.contrib.auth.decorators import login_required
-# from .tasks import add
+
+from .tasks import add
+# from .tasks import sendEmail
 
 def login(request):
     context = {}
@@ -44,7 +46,7 @@ def register(request):
             return render(request, 'loginapp/register.html', context)
 
         # create user
-        user = User.objects.create_user(request.POST['user'],password=request.POST['password'])
+        user = User.objects.create_user(request.POST['user'],password=request.POST['password'],email=request.POST['email'])
         user.save()
         dj_login(request, user)
         # return HttpResponseRedirect(reverse ('keashareapp:index'))
@@ -71,13 +73,15 @@ def reset_password(request):
 
 
 def sendemail(request):
-    # add.delay(2,2)
-    # return HttpResponse('<h1>Task is done!!!</h1>')
-    return render(request, 'loginapp/sendemail.html')
+    add.delay(5, 5)
+    # sendEmail.delay()
+    return HttpResponse('<h1>Task is done!!!</h1>')
+    # return render(request, 'loginapp/sendemail.html')
 
 
 def profile(request):
     return render(request, 'loginapp/profile.html')
+
 
 def edit_profile(request):
     if request.method == 'GET':

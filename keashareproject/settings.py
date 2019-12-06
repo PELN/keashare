@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'loginapp',
     'keashareapp',
+    'rest_framework',
+    'apiapp',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +126,10 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/'
 
+# Pages that can be viewed without authentication
 LOGIN_EXEMPT_URLS = (
     r'^accounts/$',
     r'^accounts/register/$',
 )
+
+

@@ -19,7 +19,9 @@ class LoginRequiredMiddleware:
         assert hasattr(request, 'user') # check if user exists
         path = request.path_info.lstrip('/')
         print(path)
-        # if user is not auth, redirect them
+        
+        # if user is not auth, and the url they are trying to access is not in setttings,
+        # redirect them to login
         if not request.user.is_authenticated:
             if not any(url.match(path) for url in EXEMPT_URLS):
                 return HttpResponseRedirect(settings.LOGIN_URL)
