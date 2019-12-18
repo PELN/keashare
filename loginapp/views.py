@@ -5,10 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from .utils import random_string
 from .models import *
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 
-# from .tasks import sleepy
-# from .tasks import add
 from .tasks import send
 
 def login(request):
@@ -77,14 +75,6 @@ def reset_password(request):
     return render(request, 'loginapp/reset_password.html', context)
 
 
-def send_email(request):
-    # sleepy.delay(10)
-    # add.delay(2,2)
-    send.delay("joachimes@gmail.com", "Reset password", "testing body")
-    return HttpResponse('<h1>Email has been sent!</h1>')
-
-
-
 def profile(request):
     return render(request, 'loginapp/profile.html')
 
@@ -99,7 +89,6 @@ def edit_profile(request):
         return render(request, 'loginapp/edit_profile.html', context)
 
     if request.method == 'POST':
-        # profile_info = Profile() # makes a new profile object for every post (only use for items)
         profile_info = Profile.objects.get(user=request.user) # get the user in db
 
         # print("request.user")

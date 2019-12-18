@@ -26,5 +26,9 @@ class LoginRequiredMiddleware:
             if not any(url.match(path) for url in EXEMPT_URLS):
                 return HttpResponseRedirect(settings.LOGIN_URL)
 
+
+
+
+
 # redirects to login even for admin page - more secure
 # login as admin and access admin page through url
