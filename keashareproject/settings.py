@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'loginapp',
     'keashareapp',
     'rest_framework',
@@ -138,3 +139,9 @@ CELERY_RESULT_BACKEND = 'redis://localhost'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'graph_models': True,
+}
