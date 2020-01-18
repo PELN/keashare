@@ -1,45 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
     <title>Keashare</title>
 {% endblock %}
 
-{% block nav %}
-    <ul class="navbar-nav ml-auto flex-nowrap">
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
-        </li>
-    </ul>
-{% endblock %}
-
 {% block body %}
 <div class="container">
     <div class="jumbotron">
-        <h1>Keashare</h1>
-        <h2>Welcome: {{ user.username }}</h2>
+        <h1>Welcome to Keashare {{ user.username }}</h1>
         <hr>
         <h4>Recent posts from groups you are member of</h4>
-        <hr>
-        <div>
-            {% for post in posts %}
-                Group: {{ post.group.name }}
-                Created: {{ post.created }}
-                Last updated: {{ post.last_updated }}
-                By: {{ post.user }}
-                <div>{{ post.text }}</div>
-                <hr>
-            {% endfor %}
+        {% for post in posts %}
+        <div class="post">
+            <div class="group-post-by">
+                <img class="groups-icon" src="{% static 'groups-icon.png' %}">
+                {{ post.group.name }}
+                <img class="user-icon" src="{% static 'user-icon.png' %}">
+                {{ post.user }}
+            </div>
+            <div class="group-post-created">{{ post.created }}</div>
+            <div class="group-post-text">{{ post.text }}</div>
         </div>
-
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

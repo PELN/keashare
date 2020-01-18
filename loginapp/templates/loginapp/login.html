@@ -7,20 +7,21 @@
 {% block body %}
 <div class="container">
     <div class="jumbotron">
-        <h1>Login</h1>
-
-        <form action="." method="POST">
-            {% csrf_token %}
-            <label for="user">Username</label>
-            <input type="text" name="user" id="user" placehoder="Username" class="form-control">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placehoder="Password" class="form-control">
-            <input type="submit" value="Submit" class="form-control">
-        </form>
-        {% if error %} 
-            <p class="error"> {{ error }} </p>
-            <a href="{% url 'loginapp:reset_password' %}">Reset password</a>
-        {% endif %}
+        <div class="form-container">
+            <h1>Login</h1>
+            <form action="." method="POST">
+                {% csrf_token %}
+                <label for="user">Username</label>
+                <p><input type="text" name="user" id="user" placehoder="Username" class="form-control"></p>
+                <label for="password">Password</label>
+                <p><input type="password" name="password" id="password" placehoder="Password" class="form-control"></p>
+                <p><input type="submit" value="Submit" class="form-control"></p>
+            </form>
+            {% if error %} 
+                <p class="error"> {{ error }} </p>
+                <a href="{% url 'loginapp:reset_password' %}">Reset password</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

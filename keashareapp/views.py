@@ -1,6 +1,5 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . import models
 
@@ -13,13 +12,12 @@ def index(request):
         context = {
             'user': user,
             'posts': posts,
-            'user_groups': user_groups,
+            'user_groups': user_groups
         }
 
         return render(request, 'keashareapp/index.html', context=context)
 
 def groups(request):
-    # user = User.objects.filter(pk=1)[0]
     user = request.user
 
     # get list of groups user is/is not member
@@ -49,7 +47,6 @@ def groups(request):
 
 
 def groupdetails(request, pk):
-    # user = User.objects.filter(pk=1)[0]
     user = request.user
 
     if request.method == 'GET':
@@ -74,14 +71,13 @@ def groupdetails(request, pk):
         post.group = models.AppGroup.objects.get(pk=request.POST['group'])
         post.user = user
         post.save()
-        return HttpResponseRedirect(reverse('keashareapp:post_submit'))
+        return HttpResponseRedirect(reverse('keashareapp:post_submit')) # post_submit url -> post_submit view
 
     return HttpResponseBadRequest()
 
 def post_submit(request):
     # redirect to previous page
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    # return render(request, 'keashareapp/post_submit.html')
 
 def join_group(request, pk):
     user = request.user

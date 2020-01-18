@@ -1,24 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
     <title>Group details</title>
-{% endblock %}
-
-{% block nav %}
-    <ul class="navbar-nav ml-auto flex-nowrap">
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
-        </li>
-    </ul>
 {% endblock %}
 
 {% block body %}
@@ -26,35 +10,51 @@
     <div class="jumbotron">
         {% for group in user_groups %}
             <h1>{{ group.name }}</h1>
-            <p>Group description: {{ group.description }}</p>
+            <p>{{ group.description }}</p>
         {% endfor %}
         <hr>
-
-        <h2>Post in group</h2>
-        {% for group in user_groups %}
-            <form action="{{ group.pk }}" method="POST">
-        {% endfor %}
-                {% csrf_token  %}
-                <p><select name="group" id="group">
-                    {% for group in user_groups %}
-                        <option value="{{ group.pk }}">{{ group.name }}</option>
-                    {% endfor %}
-                </select></p>
-                <p><input type="textarea" name="text" id="text" placeholder="Post something"></p>
-                <p><input type="submit" value="Submit"></p>
-            </form>
-        <hr>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create post</button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Post in group</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="post-container">
+                      {% for group in user_groups %}
+                      <form action="{{ group.pk }}" method="POST">
+                      {% endfor %}
+                          {% csrf_token  %}
+                          <p><select name="group" id="group" class="form-control">
+                              {% for group in user_groups %}
+                                  <option value="{{ group.pk }}">{{ group.name }}</option>
+                              {% endfor %}
+                          </select></p>
+                          <p><input type="textarea" name="text" id="text" placeholder="Write your post here..." class="form-control"></p>
+                          <p><input type="submit" value="Submit" class="form-control"></p>
+                      </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- POSTS THAT BELONGS TO GROUP -->
-        <div>
         {% for post in posts %}
-            Created: {{ post.created }}
-            Last updated: {{ post.last_updated }}
-            By: {{ post.user }}
-            <div>{{ post.text }}</div>
-            <hr>
-        {% endfor %}
+        <div class="post">
+            <div class="group-post-by">
+                <img class="group-detail-user-icon" src="{% static 'user-icon.png' %}">
+                {{ post.user }}
+            </div>
+            <div class="group-post-created">{{ post.created }}</div>
+            <div class="group-post-text">{{ post.text }}</div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

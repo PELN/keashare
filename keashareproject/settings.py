@@ -128,9 +128,11 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/accounts/'
 
 # Pages that can be viewed without authentication
+# tuple of urls (regular expressions)
 LOGIN_EXEMPT_URLS = (
-    r'^accounts/$',
-    r'^accounts/register/$',
+    'accounts/',
+    'accounts/register/',
+    'accounts/reset_password/'
 )
 
 # CELERY

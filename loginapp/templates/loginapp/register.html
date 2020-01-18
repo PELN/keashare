@@ -7,25 +7,26 @@
 {% block body %}
 <div class="container">
     <div class="jumbotron">
+        <div class="form-container">
         <h1>Register</h1>
-
-        <form action="{% url 'loginapp:register' %}" method="POST">
-            {% csrf_token %}
-            <label for="user">Username</label>
-            <input type="text" name="user" id="user" placehoder="Username" class="form-control">
-            <label for="user">Email</label>
-            <input type="text" name="email" id="email" placehoder="Email" class="form-control">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placehoder="Password" class="form-control">
-            <label for="confirmPassword">Confirm password</label>
-            <input type="password" name="confirmPassword" id="confirmPassword" placehoder="confirmPassword" class="form-control">
-            <!-- <input class="button" type="submit" value="Submit" class="form-control"> -->
-            <button class="form-control">Submit</button>
-        </form>
-
-        {% if error %} 
-            <p class="error"> {{ error }} </p> 
-        {% endif %}
+            <form action="{% url 'loginapp:register' %}" method="POST">
+                {% csrf_token %}
+                <label for="user">Username</label>
+                <p><input type="text" name="user" id="user" placehoder="Username" class="form-control"></p>
+                <label for="user">Email</label>
+                <p><input type="text" name="email" id="email" placehoder="Email" class="form-control"></p>
+                <label for="password">Password</label>
+                <p><input type="password" name="password" id="password" placehoder="Password" class="form-control"></p>
+                <label for="confirmPassword">Confirm password</label>
+                <p><input type="password" name="confirmPassword" id="confirmPassword" placehoder="confirmPassword" class="form-control"></p>
+                <!-- <input class="button" type="submit" value="Submit" class="form-control"> -->
+                <button class="form-control">Submit</button>
+            </form>
+            
+            {% if error %} 
+                <p class="error"> {{ error }} </p> 
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

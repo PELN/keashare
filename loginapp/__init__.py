@@ -1,1 +1,1 @@
-default_app_config = 'loginapp.apps.LoginappConfig'
+default_app_config = 'loginapp.apps.LoginappConfig' # will run the signal in LoginappConfig whenever it needs it

@@ -4,34 +4,24 @@
     <title>Profile</title>
 {% endblock %}
 
-{% block nav %}
-    <ul class="navbar-nav ml-auto flex-nowrap">
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
-        </li>
-    </ul>
-{% endblock %}
-
 {% block body %}
 <div class="container">
     <div class="jumbotron">
-        <h1>Profile</h1>
-        <ul>
-            <li>Username: {{ user.username }}</li>
-            <li>Bio: {{ user.profile.bio }}</li>
-            <li>City: {{ user.profile.city }}</li>
-            <li>Study: {{ user.profile.study }}</li>
-        </ul>
-        <a href="{% url 'loginapp:edit_profile' %}">Edit profile</a>
+        <div class="form-container">
+            <h1>Profile</h1>
+            <hr>
+                <p>Username: {{ user.username }}</p>
+                <hr>
+                <p>Email: {{ user.email }}</p>
+                <hr>
+                <p>Bio: {{ user.profile.bio }}</p>
+                <hr>
+                <p>City: {{ user.profile.city }}</p>
+                <hr>
+                <p>Study: {{ user.profile.study }}</p>
+            <hr>
+            <div class="edit-btn"><a href="{% url 'loginapp:edit_profile' %}">Edit profile</a></div>
+        </div>
     </div>
 </div>
 {% endblock %}}

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,21 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     {% block head %}
         <title>Header</title>
     {% endblock %}
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="d-flex flex-grow-1">
             <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
             <a class="navbar-brand d-none d-lg-inline-block" href="#">
                 KEASHARE
             </a>
-            <!-- <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#"> -->
-                <!-- <img src="//placehold.it/40?text=LOGO" alt="logo"> -->
-            <!-- </a> -->
             <div class="w-100 text-right">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -27,7 +25,22 @@
             </div>
         </div>
         <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-            {% block nav %}
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto flex-nowrap">
+                <li class="nav-item">
+                    <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
+                </li>
+            </ul>
+            {% else %}
             <ul class="navbar-nav ml-auto flex-nowrap">
                 <li class="nav-item">
                     <a href="{% url 'loginapp:register' %}" class="nav-link m-2 menu-item nav-active">Register</a>
@@ -36,7 +49,7 @@
                     <a href="{% url 'loginapp:login' %}" class="nav-link m-2 menu-item nav-active">Login</a>
                 </li>
             </ul>
-            {% endblock %}
+            {% endif %}
         </div>
     </nav>
 

@@ -4,51 +4,67 @@
     <title>Groups</title>
 {% endblock %}
 
-{% block nav %}
-    <ul class="navbar-nav ml-auto flex-nowrap">
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:index' %}" class="nav-link m-2 menu-item nav-active">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'keashareapp:groups' %}" class="nav-link m-2 menu-item nav-active">Groups</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:profile' %}" class="nav-link m-2 menu-item nav-active">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'loginapp:logout' %}" class="nav-link m-2 menu-item nav-active">Logout</a>
-        </li>
-    </ul>
-{% endblock %}
-
 {% block body %}
 <div class="container">
     <div class="jumbotron">
         <h1>Groups</h1>
         <hr>
-        <h2>Create new group</h2>
-        <form action="{% url 'keashareapp:groups' %}" method="POST">
-            {% csrf_token %}
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="name">
-            <label for="description">Description</label>
-            <input id="description" name="description" type="textarea" placeholder="description">
-            <input type="submit" value="Create group">
-        </form>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create group</button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="group-container">
+                        <form action="{% url 'keashareapp:groups' %}" method="POST">
+                            {% csrf_token %}
+                            <p><input id="name" name="name" type="text" placeholder="Name of group..." class="form-control"></p>
+                            <p><input id="description" name="description" type="textarea" placeholder="Description of group..." class="form-control"></p>
+                            <p><input type="submit" value="Create group" class="form-control"></p>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
         <hr>
-        <h2>My groups</h2>
-        <hr>
-        {% for group in user_groups %}
-            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - {{ group.description }} - <a href="{% url 'keashareapp:leave_group' pk=group.pk %}">Leave Group</a></p>
+
+        <div class="my-groups-container">
+            <h2>My groups</h2>
             <hr>
-        {% endfor %}
+            <div class="groups-container">
+                {% for group in user_groups %}
+                    <div class="group">
+                        <p class="p-group-name"><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a></p>
+                        <p>{{ group.description }}</p>
+                        <div class="action-btn"><a href="{% url 'keashareapp:leave_group' pk=group.pk %}">Leave Group</a></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         
-        <h2>Discover groups</h2>
-        <hr>
-        {% for group in not_user_groups %}
-            <p><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a> - {{ group.description }} - <a href="{% url 'keashareapp:join_group' pk=group.pk %}">Join Group</a></p>
+        <div class="discover-groups-container">
+            <h2>Discover groups</h2>
             <hr>
-        {% endfor %}
+            <div class="groups-container">
+                {% for group in not_user_groups %}
+                    <div class="group">
+                        <div class="content">
+                            <p class="p-group-name"><a href="{% url 'keashareapp:groupdetails' pk=group.pk %}">{{ group.name }}</a></p>
+                            <p>{{ group.description }}</p>
+                        </div>
+                        <div class="action-btn join-btn"><a href="{% url 'keashareapp:join_group' pk=group.pk %}">Join Group</a></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}
